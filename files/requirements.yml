@@ -1,0 +1,4 @@
+---
+
+- src: https://github.com/jacoelho/ansible.box.git
+  path: /tmp/packer-provisioner-ansible-local/roles

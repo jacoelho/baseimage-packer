@@ -1,0 +1,55 @@
+{
+    "builders": [
+        {
+            "commit": "true",
+            "image": "ubuntu:14.04",
+            "type": "docker"
+        }
+    ],
+    "post-processors": [
+        [
+            {
+                "repository": "jacoelho/baseimage",
+                "tag": "0.7",
+                "type": "docker-tag"
+            },
+            "docker-push"
+        ]
+    ],
+    "provisioners": [
+        {
+            "destination": "/tmp",
+            "source": "files/",
+            "type": "file"
+        },
+        {
+            "scripts": [
+                "scripts/ansible.sh"
+            ],
+            "type": "shell"
+        },
+        {
+            "inline": [
+                "ansible-galaxy install -r /tmp/requirements.yml"
+            ],
+            "type": "shell"
+        },
+        {
+            "extra_arguments": [
+                "--extra-vars @/tmp/{{user `PACKER_IMAGE`}}.yml",
+                "-vvvv"
+            ],
+            "playbook_file": "provision.yml",
+            "type": "ansible-local"
+        },
+        {
+            "scripts": [
+                "scripts/cleanup.sh"
+            ],
+            "type": "shell"
+        }
+    ],
+    "variables": {
+        "PACKER_IMAGE": "{{env `PACKER_IMAGE`}}"
+    }
+}

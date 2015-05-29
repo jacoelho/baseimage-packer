@@ -1,0 +1,16 @@
+---
+
+- name: install docker container
+  hosts: all
+  connection: local
+
+  vars:
+    box_container: false
+    box_upgrade: false
+    box_github_https: true
+    box_user: app
+    box_group: app
+    box_webpath: /var/www/service/current
+
+  roles:
+    - { role: ansible.box }
