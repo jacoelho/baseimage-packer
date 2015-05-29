@@ -1,28 +1,22 @@
 {
     "builders": [
         {
-            "commit": "true",
+            "export_path": "{{user `PACKER_IMAGE`}}-{{user `DATE`}}.tar",
             "image": "ubuntu:14.04",
             "type": "docker"
         }
     ],
     "post-processors": [
-        [
-            {
-                "repository": "jacoelho/baseimage-{{user `PACKER_IMAGE`}}",
-                "tag": "{{user `DATE`}}",
-                "type": "docker-tag"
-            },
-            "docker-push"
-        ],
-        [
-            {
-                "repository": "jacoelho/baseimage-{{user `PACKER_IMAGE`}}",
-                "tag": "latest",
-                "type": "docker-tag"
-            },
-            "docker-push"
-        ]
+        {
+            "repository": "jacoelho/baseimage-{{user `PACKER_IMAGE`}}",
+            "tag": "{{user `DATE`}}",
+            "type": "docker-import"
+        },
+        {
+            "repository": "jacoelho/baseimage-{{user `PACKER_IMAGE`}}",
+            "tag": "latest",
+            "type": "docker-import"
+        }
     ],
     "provisioners": [
         {
@@ -58,7 +52,7 @@
         }
     ],
     "variables": {
-        "PACKER_IMAGE": "",
-        "DATE": "{{isotime \"2006-01-02-1504\"}}"
+        "DATE": "{{isotime \"2006-01-02-1504\"}}",
+        "PACKER_IMAGE": ""
     }
 }
