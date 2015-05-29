@@ -9,8 +9,16 @@
     "post-processors": [
         [
             {
-                "repository": "jacoelho/baseimage",
-                "tag": "0.7",
+                "repository": "jacoelho/baseimage-{{user `PACKER_IMAGE`}}",
+                "tag": "{{user `DATE`}}",
+                "type": "docker-tag"
+            },
+            "docker-push"
+        ],
+        [
+            {
+                "repository": "jacoelho/baseimage-{{user `PACKER_IMAGE`}}",
+                "tag": "latest",
                 "type": "docker-tag"
             },
             "docker-push"
@@ -50,6 +58,7 @@
         }
     ],
     "variables": {
-        "PACKER_IMAGE": "{{env `PACKER_IMAGE`}}"
+        "PACKER_IMAGE": "",
+        "DATE": "{{isotime \"2006-01-02-1504\"}}"
     }
 }
