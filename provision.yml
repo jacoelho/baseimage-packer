@@ -5,7 +5,7 @@
   connection: local
 
   vars:
-    box_container: true
+    box_container: false
     box_upgrade: false
     box_github_https: true
     box_user: app

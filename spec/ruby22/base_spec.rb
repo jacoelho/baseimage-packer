@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe "image ruby 21" do
+describe "image ruby 22" do
   before (:all) do
     @image = Docker::Image.all.detect do |image|
       image.info['RepoTags'].include? ENV['DOCKER_IMAGE']
@@ -16,7 +16,7 @@ describe "image ruby 21" do
     it { should be_disabled }
   end
 
-  packages = %w(bash nginx-common nginx-extras ruby2.1 ruby2.1-dev redis-server redis-tools memcached)
+  packages = %w(bash nginx-common nginx-extras ruby2.2 ruby2.2-dev redis-server redis-tools memcached)
   packages.each do |p|
     describe package(p) do
       it { should be_installed }
