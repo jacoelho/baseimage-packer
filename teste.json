@@ -53,6 +53,6 @@
     ],
     "variables": {
         "DATE": "{{isotime \"2006-01-02-1504\"}}",
-        "PACKER_IMAGE": ""
+        "PACKER_IMAGE": "{{ env `PACKER_IMAGE`}}"
     }
 }
